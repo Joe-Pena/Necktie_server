@@ -3,7 +3,7 @@ class CreateProjects < ActiveRecord::Migration[5.2]
     create_table :projects do |t|
       t.string :name
       t.boolean :done
-      t.has_many :todos
+      t.references :todos
       t.timestamps
     end
   end

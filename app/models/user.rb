@@ -1,4 +1,7 @@
 class User < ApplicationRecord
-  validates :username, presence: true
-  validates :password, presence: true
+  has_secure_password
+
+  validates_presence_of :username
+  validates_uniqueness_of :username
+  validates_presence_of :email
 end
