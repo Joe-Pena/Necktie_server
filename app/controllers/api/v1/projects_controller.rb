@@ -4,7 +4,7 @@ module Api
       def index
         @projects = Project.all
 
-        render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects}, status: :ok
+        render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.sort}, status: :ok
       end
 
       def show
