@@ -18,10 +18,9 @@ ActiveRecord::Schema.define(version: 2019_05_07_154330) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.boolean "done"
-    t.bigint "todos_id"
+    t.integer "todos", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["todos_id"], name: "index_projects_on_todos_id"
   end
 
   create_table "todos", force: :cascade do |t|
