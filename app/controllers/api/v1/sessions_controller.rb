@@ -30,12 +30,8 @@ module Api
 
       def logout
         reset_session
-        render json: { status: :ok, logout: true }
       end
-
-      def logout
-
-      end
+      
     end
   end
 end
