@@ -46,7 +46,7 @@ module Api
       private
 
       def project_params
-        params.require(:project).permit(:name, :done, :todos_id)
+        params.require(:project).permit(:name, :done, :todos)
       end
     end
   end
