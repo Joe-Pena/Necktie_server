@@ -11,7 +11,7 @@ module Api
         if @current_user
           render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.sort}, status: :ok
         else
-          render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.pluck(:id, :name).sort}, status: :ok
+          render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.select(:id, :name).sort}, status: :ok
         end
       end
 
