@@ -3,9 +3,11 @@ module Api
     class ProjectsController < ApplicationController
       include CurrentUserConcern
 
+      before_action :authenticate_user, except: :index
+
       def index    
         @projects = Project.all
-        
+
         if @current_user
           render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.sort}, status: :ok
         else
@@ -54,6 +56,13 @@ module Api
       def project_params
         params.require(:project).permit(:name, :done, :todos)
       end
+
+      def authenticate_user
+        if !@current_user
+          render json: {status: 'UNAUTHORIZED', message: 'User not logged in'}, status: :unauthorized
+        end
+      end
+
     end
   end
 end

@@ -1,6 +1,10 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      include CurrentUserConcern
+
+      before_action :authenticate_user
+
       def index
         @users = User.all
 
@@ -51,6 +55,12 @@ module Api
         params.require(:user).permit(:username, :email, :password, :password_confirmation)
       end
 
+      def authenticate_user
+        if !@current_user
+          render json: {status: 'UNAUTHORIZED', message: 'User not logged in'}, status: :unauthorized
+        end
+      end
+      
     end
   end
 end

@@ -1,10 +1,13 @@
 module Api
   module V1
     class TodosController < ApplicationController
-      def index
-        @todos = Todo.all
+      include CurrentUserConcern
 
-        render json: {status: 'SUCCESS', message: 'Todo list retrieved', data: @todos}, status: :ok
+      before_action :authenticate_user
+
+      def index
+          @todos = Todo.all
+          render json: {status: 'SUCCESS', message: 'Todo list retrieved', data: @todos}, status: :ok
       end
 
       def show
@@ -14,10 +17,10 @@ module Api
       end
 
       def create
-        @todo = Todo.new(todo_params)
+          @todo = Todo.new(todo_params)
 
-        @todo.save
-        render json: @todo, status: :created
+          @todo.save
+          render json: @todo, status: :created
       end
 
       def update
@@ -44,6 +47,12 @@ module Api
 
       def todo_params
         params.require(:todo).permit(:name, :done, :project_id)
+      end
+
+      def authenticate_user
+        if !@current_user
+          render json: {status: 'UNAUTHORIZED', message: 'User not logged in'}, status: :unauthorized
+        end
       end
     end
   end
