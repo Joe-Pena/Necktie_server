@@ -1,10 +1,16 @@
 module Api 
   module V1
     class ProjectsController < ApplicationController
-      def index
-        @projects = Project.all
+      include CurrentUserConcern
 
-        render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.sort}, status: :ok
+      def index    
+        @projects = Project.all
+        
+        if @current_user
+          render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.sort}, status: :ok
+        else
+          render json: {status: 'SUCCESS', message: 'Projects retrieved', data: @projects.pluck(:id, :name).sort}, status: :ok
+        end
       end
 
       def show
