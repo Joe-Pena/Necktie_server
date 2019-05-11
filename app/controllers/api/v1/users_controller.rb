@@ -3,7 +3,7 @@ module Api
     class UsersController < ApplicationController
       include CurrentUserConcern
 
-      before_action :authenticate_user
+      before_action :authenticate_user, except: :create
 
       def index
         @users = User.all
